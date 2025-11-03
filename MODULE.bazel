@@ -1,0 +1,27 @@
+"""Kairo Bazel Module"""
+
+module(
+    name = "kairo",
+)
+
+# Go rules for building Go code
+bazel_dep(name = "rules_go", version = "0.56.1")
+
+# Gazelle for generating BUILD files automatically
+bazel_dep(name = "gazelle", version = "0.44.0")
+
+# Configure Go SDK
+go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(version = "1.24.6")
+
+# Configure Go dependencies from go.work
+go_deps = use_extension("@gazelle//:extensions.bzl", "go_deps")
+go_deps.from_file(go_work = "//:go.work")
+
+# Standard public Go proxy
+go_deps.config(
+    go_env = {
+        "GOPROXY": "https://proxy.golang.org,direct",
+    },
+)
+
