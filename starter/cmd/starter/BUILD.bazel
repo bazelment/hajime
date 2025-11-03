@@ -1,8 +1,14 @@
-load("@rules_go//go:def.bzl", "go_binary")
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_binary(
     name = "starter",
-    srcs = ["main.go"],
+    embed = [":starter_lib"],
     visibility = ["//visibility:public"],
 )
 
+go_library(
+    name = "starter_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/bazelment/kairo/starter/cmd/starter",
+    visibility = ["//visibility:private"],
+)

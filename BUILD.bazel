@@ -23,4 +23,3 @@ sh_binary(
         "@rules_go//go",
     ],
 )
-
