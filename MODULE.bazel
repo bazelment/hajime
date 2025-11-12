@@ -1,7 +1,7 @@
-"""Kairo Bazel Module"""
+"""Hajime Bazel Module"""
 
 module(
-    name = "kairo",
+    name = "hajime",
 )
 
 # Go rules for building Go code
@@ -9,6 +9,16 @@ bazel_dep(name = "rules_go", version = "0.56.1")
 
 # Gazelle for generating BUILD files automatically
 bazel_dep(name = "gazelle", version = "0.44.0")
+
+# Rust rules for building Rust code
+bazel_dep(name = "rules_rust", version = "0.67.0")
+
+# Prost rules for Rust protobuf
+bazel_dep(name = "rules_rust_prost", version = "0.67.0")
+
+# Proto rules for protocol buffers
+bazel_dep(name = "rules_proto", version = "6.0.2")
+bazel_dep(name = "protobuf", version = "29.0")
 
 # Configure Go SDK
 go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
@@ -24,4 +34,27 @@ go_deps.config(
         "GOPROXY": "https://proxy.golang.org,direct",
     },
 )
+use_repo(go_deps, "org_golang_google_grpc")
 
+# Configure Rust toolchain
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(edition = "2024")
+
+# Configure Rust crates for gRPC
+# NOTE: The crate specifications below are NOT needed for the gRPC example.
+# We use rules_rust_prost's internal dependencies directly to avoid version conflicts.
+# See grpc_example/rust/BUILD.bazel for details.
+#
+# If you need additional Rust crates for other projects, uncomment and configure:
+# crate = use_extension("@rules_rust//crate_universe:extension.bzl", "crate")
+# crate.from_cargo(
+#     name = "crates",
+#     cargo_lockfile = "//:Cargo.lock",
+#     manifests = [
+#         "//:Cargo.toml",
+#     ],
+# )
+# crate.from_specs(
+#     cargo_lockfile = "//:Cargo.Bazel.lock",
+# )
+# use_repo(crate, "crates")

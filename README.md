@@ -1,16 +1,25 @@
-# Kairo - Coding Agent with modern stack
+# Hajime
 
-🚧 **Experimental Project - Under Development** 🚧
+## Purpose
 
-An experimental Go-based coding agent built with Bazel. This project explores building intelligent coding assistants using Go, with a focus on modularity and performance.
+**Hajime** (はじめ - "beginning" in Japanese) is a polyglot monorepo starter template that demonstrates modern multi-language development using Bazel. It provides working examples of:
 
-## About
+- **Multi-language build system**: Build Go and Rust applications in the same repository with consistent tooling
+- **gRPC microservices**: Complete client/server implementations in both Go and Rust, showcasing language interoperability
+- **Protocol Buffers**: Automated protobuf code generation for both languages from shared schema definitions
+- **Modern Bazel**: Uses MODULE.bazel (bzlmod) for dependency management, replacing the legacy WORKSPACE approach
 
-Kairo is a minimal Bazel workspace designed for developing Go-based coding agents and related tools. The project is in early development and uses modern build tools and practices.
+## What's Included
 
-## Prerequisites
+- **grpc_example/**: Working gRPC service implementations
+  - Go client and server
+  - Rust client and server
+  - Shared protobuf definitions with automatic code generation
+- **Bazel configuration**: Pre-configured rules for Go (`rules_go`), Rust (`rules_rust`), and protobuf code generation
 
-- [Bazel](https://bazel.build/) (Bazelisk recommended)
-  - Version locked to **7.6.0 LTS** via `.bazelversion`
-- Go 1.24+ (managed by Bazel)
+## Use Cases
 
+- Starting a polyglot microservices project
+- Learning how to structure multi-language Bazel workspaces
+- Understanding gRPC service implementations across different languages
+- Evaluating Bazel for multi-language projects

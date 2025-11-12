@@ -1,6 +1,6 @@
 load("@gazelle//:def.bzl", "gazelle")
 
-# gazelle:prefix github.com/bazelment/kairo
+# gazelle:prefix github.com/bazelment/hajime
 gazelle(name = "gazelle")
 
 # Update BUILD files with dependencies

@@ -1,0 +1,42 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_library")
+
+# gazelle:exclude server
+# gazelle:exclude client
+
+# Go Server
+go_library(
+    name = "server_lib",
+    srcs = ["server/main.go"],
+    importpath = "github.com/bazelment/hajime/grpc_example/go/server",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//grpc_example/proto:greeter_go_proto",
+        "@org_golang_google_grpc//:grpc",
+    ],
+)
+
+go_binary(
+    name = "server",
+    embed = [":server_lib"],
+    visibility = ["//visibility:public"],
+)
+
+# Go Client
+go_library(
+    name = "client_lib",
+    srcs = ["client/main.go"],
+    importpath = "github.com/bazelment/hajime/grpc_example/go/client",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//grpc_example/proto:greeter_go_proto",
+        "@org_golang_google_grpc//:grpc",
+        "@org_golang_google_grpc//credentials/insecure",
+    ],
+)
+
+go_binary(
+    name = "client",
+    embed = [":client_lib"],
+    visibility = ["//visibility:public"],
+)
+

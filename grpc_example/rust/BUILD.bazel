@@ -1,0 +1,37 @@
+load("@rules_rust//rust:defs.bzl", "rust_binary")
+
+# IMPORTANT: tonic and tokio versions MUST match rules_rust_prost's internal versions
+# 
+# Why we pin to rules_rust_prost's versions:
+# - The proto-generated code uses rules_rust_prost's tonic (0.12.1)
+# - If we use @crates//:tonic, it may resolve to a different patch version (e.g., 0.12.3)
+# - Even minor version differences cause Rust to treat types as incompatible
+# - This results in trait implementation errors like:
+#   "the trait bound `tonic::Request<T>: tonic::request::IntoRequest<T>` is not satisfied"
+# 
+# Solution: Use the exact tonic/tokio versions from rules_rust_prost to ensure
+# all code (generated + application) uses identical types.
+
+# Rust Server
+rust_binary(
+    name = "server",
+    srcs = ["server/main.rs"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//grpc_example/proto:greeter_rust_proto",
+        "@rules_rust_prost//private/3rdparty/crates:tonic-0.12.1",
+        "@rules_rust_prost//private/3rdparty/crates:tokio-1.39.3",
+    ],
+)
+
+# Rust Client
+rust_binary(
+    name = "client",
+    srcs = ["client/main.rs"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//grpc_example/proto:greeter_rust_proto",
+        "@rules_rust_prost//private/3rdparty/crates:tonic-0.12.1",
+        "@rules_rust_prost//private/3rdparty/crates:tokio-1.39.3",
+    ],
+)

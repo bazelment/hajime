@@ -9,6 +9,6 @@ go_binary(
 go_library(
     name = "starter_lib",
     srcs = ["main.go"],
-    importpath = "github.com/bazelment/kairo/starter/cmd/starter",
+    importpath = "github.com/bazelment/hajime/starter/cmd/starter",
     visibility = ["//visibility:private"],
 )
